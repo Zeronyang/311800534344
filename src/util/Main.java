@@ -10,8 +10,9 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        System.out.println("输入1生成作业，输入2批改作业，输入其他退出程序");
+        System.out.print("程序功能：");
+        System.out.println("【1】生成作业 【2】批改作业 【3】退出程序");
+        System.out.print("请选择功能：");
         Scanner scanner = new Scanner(System.in);
         String func = scanner.next();
         if (func.equals("2")) {
@@ -54,7 +55,8 @@ public class Main {
             TwoTuple<String, String> twoTuple = CF.expBuilder(expAmount);
             FileUtil.write("exercise.txt", twoTuple.first);
             FileUtil.write("answer.txt", twoTuple.second);
-            System.out.println("题目生成成功，若要批改请将答案输入到useranswer.txt");
+            System.out.println("题目生成成功！");
+            System.out.println("若需批改请将答案输入【useranswer.txt】文件中");
         }else{}
         System.out.println();
         System.exit(0);
