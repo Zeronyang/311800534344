@@ -1,5 +1,5 @@
 package entity;
-/*
+/**
  *题目表达式实体类
  */
 public class Formula {

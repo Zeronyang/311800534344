@@ -1,59 +1,69 @@
 package util;
 
 import entity.Generics.TwoTuple;
-import service.Creatformula;
+import service.Check;
+import service.CreatFormula;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-	public static void main(String[] args) {
-		  //检验参数是否有效，并保存为parameter和fileName两部分
-        ArrayList<String> parameters = new ArrayList<>();
-        int expAmount ;
-        int numRange ;
-        String numRegex = "[0-9]+";
-        String input;
-        for (String arg : args) {
-            //判断是否为参数
-        	parameters.add(arg);
-        }
+    public static void main(String[] args) {
+
+        System.out.println("输入1生成作业，输入2批改作业，输入其他退出程序");
         Scanner scanner = new Scanner(System.in);
-        System.out.println("请输入题目数目");
-        do {
-            input = scanner.next();
-            if(isNumeric(input)){
-                expAmount = Integer.parseInt(input);
-                break;
+        String func = scanner.next();
+        if (func.equals("2")) {
+            try {
+                Check.check("useranswer.txt", "answer.txt", "Grade.txt");
+            } catch (IOException e) {
             }
-            System.out.println("输入错误，请重新输入");
-        }while (true);
-
-        System.out.println("请输入数值范围");
-        do {
-            input = scanner.next();
-            if(isNumeric(input)){
-                numRange = Integer.parseInt(input);
-                break;
+            return;
+        } else if (func.equals("1")) {
+            ArrayList<String> parameters = new ArrayList<>();
+            int expAmount;
+            int numRange;
+            String input;
+            String numRegex = "[0-9]+";
+            for (String arg : args) {
+                //判断是否为参数
+                parameters.add(arg);
             }
-            System.out.println("输入错误，请重新输入");
-        }while (true);
+            System.out.println("请输入题目数目");
+            do {
+                input = scanner.next();
+                if (isNum(input)) {
+                    expAmount = Integer.parseInt(input);
+                    break;
+                }
+                System.out.println("输入错误，请重新输入");
+            } while (true);
 
+            System.out.println("请输入数值范围");
+            do {
+                input = scanner.next();
+                if (isNum(input)) {
+                    numRange = Integer.parseInt(input);
+                    break;
+                }
+                System.out.println("输入错误，请重新输入");
+            } while (true);
 
-        Creatformula Gen = new Creatformula(numRange);
-        TwoTuple<String,String> twoTuple = Gen.expBuilder(expAmount);
-        FileUtil.write("exercise.txt", twoTuple.first);
-        FileUtil.write("answer.txt", twoTuple.second);
-        System.out.println("题目生成成功");
+            CreatFormula CF = new CreatFormula(numRange);
+            TwoTuple<String, String> twoTuple = CF.expBuilder(expAmount);
+            FileUtil.write("exercise.txt", twoTuple.first);
+            FileUtil.write("answer.txt", twoTuple.second);
+            System.out.println("题目生成成功，若要批改请将答案输入到useranswer.txt");
+        }else{}
         System.out.println();
         System.exit(0);
+    }
 
-	}
-
-    public static boolean isNumeric(String str){
-        for(int i=str.length();--i>=0;){
-            int chr=str.charAt(i);
-            if(chr<48 || chr>57)
+    public static boolean isNum(String str) {
+        for (int i = str.length(); --i >= 0; ) {
+            int chr = str.charAt(i);
+            if (chr < 48 || chr > 57)
                 return false;
         }
         return true;

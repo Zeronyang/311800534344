@@ -58,8 +58,8 @@ public class Fraction {
         		return ""+integer+"'"+remainder+"/"+denominator;
         	}
         }
-    }//改写toString，输出为分数形式
-
+    }
+    //改写toString，输出为分数形式
     public int getNumerator() {
         return numerator;
     }
